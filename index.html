@@ -1,0 +1,98 @@
+<html> 
+<head> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<title>ssss</title>  	
+</head> 
+<body> 
+<input type="text" value="ws://192.168.104.230:12000/"  id="httpurl"  style="display:none;"/>
+ <div style="float:left;overflow:hidden;width: 100%;height: 100%">
+	<textarea id="text" style="width: 100%; height: 89%"></textarea>
+</div>
+</body> 
+</html> 
+ 
+<script type="text/javascript">
+var txt = document.getElementById("text");
+var httpurl = document.getElementById("httpurl").value;//$('#httpurl').val();
+var onway;
+var index=1;
+function test(){
+	onway = setInterval(function () {
+		 send("Hello_"+(index++));
+	},30); 
+} 
+
+//test();
+ 
+openWebSocket(httpurl);
+
+var socket; 
+var url;
+function openWebSocket(httpurl) {
+	 url=httpurl;
+	if(socket)
+		closeWebsocket();
+	 //console.log("httpurl="+httpurl);
+	 socket = new WebSocket(httpurl);
+	   
+	 socket.onerror = function (evt) {
+		 log("erro:"+JSON.stringify(evt));
+	 };
+	 
+	 socket.onopen = function(evt) { 
+	  log("Connection open ..."); 
+	  //send("Hello");
+	  test();
+	};
+
+	socket.onmessage= function(evt) {
+	  log( "Rece: " + evt.data); 
+	  //send(evt.data);
+	};
+
+	socket.onclose = function(evt) {
+	  log("Connection closed.");
+	  openWebSocket(url);
+	  clearInterval(onway);
+	}; 
+}
+
+function log( info){
+	//console.log(info); 
+	 txt.value=txt.value+info+"\r\n";
+	 
+	if(txt.value.split(/\r?\n|\r/).length > 20)
+		txt.value="";
+} 
+
+function closeWebsocket() {
+	socket.close();
+}
+ 
+function send(msg) { 
+	switch (socket.readyState) {
+	  case WebSocket.CONNECTING:
+		  log("WebSocket.CONNECTING");
+	    break;
+	  case WebSocket.OPEN:
+		 if(!msg){
+			 log("please config msg")
+			 return;
+		 } 
+		  socket.send(msg);
+		  log(msg);
+	    break;
+	  case WebSocket.CLOSING:
+	    log("WebSocket.CLOSING");
+	    break;
+	  case WebSocket.CLOSED:
+		  log("WebSocket.CLOSED");
+	    break;
+	  default:
+		  log("default");
+	    break;
+	} 
+}
+</script>
+
+ 

@@ -1,0 +1,55 @@
+LOCAL_PATH:= $(call my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_TAGS := optional
+
+LOCAL_SRC_FILES := \
+					uart_access.cpp \
+
+LOCAL_C_INCLUDES += $(KERNEL_HEADERS) \
+					$(LOCAL_PATH)
+					
+LOCAL_SHARED_LIBRARIES:= libcutils libstdc++ libc libdl libutils liblog
+
+LOCAL_MODULE:= libuart_access_min
+
+include $(BUILD_SHARED_LIBRARY)
+#BUILD_STATIC_LIBRARY     BUILD_EXECUTABLE
+
+#/////////////////////////////////////////////////////////////////////////////////////LOCAL_PATH:= $(call my-dir)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libwebsocket
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_STEM := $(LOCAL_MODULE)
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_MULTILIB := both
+LOCAL_SRC_FILES := ../websocket-master/libs/armeabi-v7a/libwebsocket.so
+include $(BUILD_PREBUILT)
+
+#/////////////////////////////////////////////////////////////////////////////////////
+include $(CLEAR_VARS)
+
+LOCAL_SHARED_LIBRARIES := libwebsocket \
+						libcutils \
+						libstdc++ \
+						libc libdl \
+						libutils \
+						liblog \
+						libuart_access_min \
+						libevent 
+
+LOCAL_SRC_FILES := main_ws_uart.cpp
+
+LOCAL_C_INCLUDES := $(KERNEL_HEADERS) \
+					$(LOCAL_PATH) \
+					$(LOCAL_PATH)/../websocket-master/jni/include \
+					$(LOCAL_PATH)/../websocket-master/jni
+
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE := ws_uart
+			
+
+include $(BUILD_EXECUTABLE)
+
