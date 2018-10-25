@@ -301,7 +301,7 @@ public:
         char mask[4];
         if (!isServer) {
             dst[1] |= 0x80;
-            uint32_t random = rand();
+            uint32_t random = 0xffeeaa;//zhr rand();
             memcpy(mask, &random, 4);
             memcpy(dst + headerLength, &random, 4);
             headerLength += 4;

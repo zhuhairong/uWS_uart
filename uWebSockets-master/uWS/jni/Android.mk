@@ -45,23 +45,3 @@ LOCAL_LDFLAGS := $(LOCAL_PATH)/../obj/local/$(TARGET_ARCH_ABI)/libuWS.so  -llog 
 LOCAL_CFLAGS += -std=c++11  -fPIC -fexceptions
 
 include $(BUILD_EXECUTABLE)
-
-
-#########################################################
-include $(CLEAR_VARS)
-
-LOCAL_MODULE    := main_ws
-
-LOCAL_SRC_FILES := 	main_ws.cpp
-					
-LOCAL_C_INCLUDES += /home/hopechart/work/android-ndk-r11c/platforms/android-21/arch-arm/usr/include \
-					$(LOCAL_PATH) \
-					$(LOCAL_PATH)/../../websocket-master/jni/include \
-					$(LOCAL_PATH)/../../websocket-master/jni
-
-LOCAL_CPPFLAGS := 
-LOCAL_LDFLAGS := $(LOCAL_PATH)/../../libevent-master/libs/$(TARGET_ARCH_ABI)/libevent.so \
-			-L$(LOCAL_PATH)/../../websocket-master/libs/armeabi-v7a/  -llog -lwebsocket -fPIC
-
-
-#include $(BUILD_EXECUTABLE)

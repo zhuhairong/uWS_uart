@@ -46,7 +46,8 @@ struct Loop {
     void *preCbData, *postCbData;
 
     Loop(bool defaultLoop) {
-        epfd = epoll_create1(EPOLL_CLOEXEC);
+        //epfd = epoll_create1(EPOLL_CLOEXEC);
+        epfd = epoll_create(10000); //zhr
         timepoint = std::chrono::system_clock::now();
     }
 

@@ -103,7 +103,8 @@ struct Context {
         uv_os_sock_t acceptedFd;
 #if defined(SOCK_CLOEXEC) && defined(SOCK_NONBLOCK)
         // Linux, FreeBSD
-        acceptedFd = accept4(fd, nullptr, nullptr, SOCK_CLOEXEC | SOCK_NONBLOCK);
+        //acceptedFd = accept4(fd, nullptr, nullptr, SOCK_CLOEXEC | SOCK_NONBLOCK);
+        acceptedFd = accept(fd, nullptr, nullptr);// zhr, SOCK_CLOEXEC | SOCK_NONBLOCK);
 #else
         // Windows, OS X
         acceptedFd = accept(fd, nullptr, nullptr);

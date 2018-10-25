@@ -60,7 +60,7 @@ Context createContext(std::string certChainFileName, std::string keyFileName, st
 
 #ifndef _WIN32
 struct Init {
-    Init() {signal(SIGPIPE, SIG_IGN);}
+    Init() {} //zhr signal(SIGPIPE, SIG_IGN);}
 } init;
 #endif
 
