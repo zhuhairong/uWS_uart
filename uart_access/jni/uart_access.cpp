@@ -184,8 +184,12 @@ int Uart_Access::thread_recv()
 		if(m_recv_cb && size > 0)
 			m_recv_cb(m_recvBuf, size);
 
-		m_recvBuf[size] = '\0';
-		IPRINTF("recv########################################:%s\n", m_recvBuf);
+		IPRINTF("recv########################################\n");
+		for(int i = 0; i < size; i++)
+		{
+			IPRINTF("[%d]:0x%x ", i, m_recvBuf[i]);
+		}
+		IPRINTF("\nrecv########################################end\n");
 	}
 	return 0;
 }
