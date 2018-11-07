@@ -41,8 +41,8 @@ int main() {
 	//pthread_create(&threadSend, NULL, send_thread, NULL);
 	pthread_mutex_init(&g_mutex, NULL);
 
-	Uart_Access* ua = new Uart_Access("/dev/ttyS2");///dev/ttyS4");
-	int ret = ua->uart_init();
+	Uart_Access* ua = new Uart_Access("/dev/ttyS1");//("/dev/ttyS2"); min
+	int ret = ua->uart_init(9600);
 	if(ret < 0)
 	{
 		printf("init uart fail\n");

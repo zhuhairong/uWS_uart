@@ -12,7 +12,7 @@ public:
 	Uart_Access(const char* dev_name);
 	virtual ~Uart_Access();
 
-	int uart_init();
+	int uart_init(int speed);
 	void uart_exit();
 	int uart_send(char* buf, int size);
 	int thread_recv();

@@ -13,15 +13,15 @@ Uart_Access* ua = NULL;
 
 void* recv_callback(char* buff, int size)
 {
-	printf("callback\n");
+	printf("callback1\n");
 	return 0;
 }
 
 int main(int argc, char** argv)
 {
 	int g_exit = 0;
-	ua = new Uart_Access("/dev/ttyFIQ0");///dev/ttyS4");
-	int ret = ua->uart_init();
+	ua = new Uart_Access("/dev/ttyS1");///dev/ttyS4");
+	int ret = ua->uart_init(9600);
 	if(ret < 0)
 	{
 		printf("init uart fail\n");
@@ -32,7 +32,12 @@ int main(int argc, char** argv)
 	
 	while(!g_exit)
 	{
-		usleep(1000*100);
+		char buff[10];
+		for(int i = 0;i <8; i++)
+			buff[i] = i;
+
+		ua->uart_send(buff, 8);
+		usleep(1000*1000);
 	}
 
 	delete ua;
